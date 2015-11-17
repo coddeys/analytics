@@ -9,7 +9,10 @@ class Question
 
   def self.suggestions_for(query)
     @redis.del "out"
-    @redis.zinterstore("out", ["analytics", "suggestions_for:#{query.downcase}"])
+    @redis.del "temp"
+    words = query.split.map {|u| "suggestions_for:#{u.downcase}" }
+    @redis.sunionstore "temp", words if words.any?
+    @redis.zinterstore("out", ["analytics", "temp"])
     analytics_update(@redis.zrange("out", 0, -1))
     questions = @redis.zrevrange "out", 0, 10, withscores: true
     questions.map { |h| h[0].to_s + " (" + h[1].to_s + " searches)"}

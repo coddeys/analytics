@@ -10,7 +10,9 @@ class Question
   def self.suggestions_for(query)
     @redis.del "out"
     @redis.zinterstore("out", ["analytics", "suggestions_for:#{query.downcase}"])
-    @redis.zrange("out", 0, -1)
+    analytics_update(@redis.zrange("out", 0, -1))
+    questions = @redis.zrevrange "out", 0, 10, withscores: true
+    questions.map { |h| h[0].to_s + " (" + h[1].to_s + " searches)"}
   end
 
   def self.index_questions
@@ -27,4 +29,11 @@ class Question
       @redis.sadd "suggestions_for:#{prefix.downcase}", value
     end
   end
+
+  def self.analytics_update(questions)
+    questions.each do |q|
+      @redis.zincrby "analytics", 1, q
+    end
+  end
+
 end

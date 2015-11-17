@@ -5,6 +5,7 @@ class LookupQuestions
 
   def call(env)
     if env["PATH_INFO"] == "/questions"
+      Rack::MiniProfiler.authorize_request
       request = Rack::Request.new(env)
       questions = Question.suggestions_for(request.params["q"])
       [200, {"Content-Type" => "application/json"}, [questions.to_json]]

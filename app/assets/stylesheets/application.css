@@ -12,11 +12,46 @@
  *
  *= require_self
  */
+body {
+  font-size: 1.3em;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  margin: 2rem;
+  color: #011627;
+  background-color: #fdfffc;
+}
 
 .container {
     width: 1024px;
     margin:auto;
 }
+
+.custom-counter {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.custom-counter li {
+  counter-increment: step-counter;
+  margin-bottom: 1em;
+}
+
+.custom-counter li::before {
+  content: counter(step-counter);
+  margin-right: 1em;
+  font-size: 80%;
+  background-color: #2ec4b6;
+  color: #fdfffc;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+.scores{
+    color: #e71d36;
+}
+
+
 input[type="text"] {
   display: block;
   margin: 0;
@@ -30,6 +65,7 @@ input[type="text"] {
   border: solid 1px #dcdcdc;
   transition: box-shadow 0.3s, border 0.3s;
 }
+
 input[type="text"]:focus {
   border: solid 1px #707070;
   box-shadow: 0 0 5px 1px #969696;
@@ -39,3 +75,4 @@ input[type="text"]:focus {
 #analytics {
   margin-top: 10rem;
 }
+

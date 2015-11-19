@@ -6,8 +6,9 @@
 
 #analytics.container
   h1 Analytics
-  ul
-  - @questions.each do |q,y|
-    li
-      span.question= q
-      span.scores= " (searches #{y.to_s})"
+  ol.custom-counter
+    - @questions.each do |q,y|
+      li
+        span.question= "#{q.capitalize} ("
+        span.scores= "#{y.to_i.to_s} "
+        span.end searches)

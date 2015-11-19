@@ -1,7 +1,13 @@
 $(function() {
-  $('#searchbox').keyup(function(e) {
-    $.getJSON("questions", { q: this.value  }, function( data ) {
-    });
-  });
+  var textInput = document.getElementById('searchbox');
+  var timeout = null;
+  textInput.onkeyup = function (e) {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+                $.getJSON("questions", { q: textInput.value  }, function( data ) {});
+              }, 1000);
+  };
 });
+
+
 

@@ -1,4 +1,13 @@
-.container
+#search.container
   h1 Example of realtime search box
   input#searchbox{ type="text"}
   #analytics
+
+
+#analytics.container
+  h1 Analytics
+  ul
+  - @questions.each do |q,y|
+    li
+      span.question= q
+      span.scores= " (searches #{y.to_s})"
